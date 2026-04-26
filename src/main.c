@@ -72,6 +72,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev, LPSTR lpCmd, int nCmdShow) 
 
     omniscent_init(&g_omni);
     sw_renderer_init(g_hwnd);
+    gl_renderer_init(g_hwnd);
 
     midi_start();
 

@@ -1,17 +1,15 @@
-# Omniscent_win32
+# Omniscent — Win32 复刻版
 
 Omniscent原作是 1997 年 **SANCTION** 制作的 4095 字节 demoscene intro（4k intro），现在只能在Dosbox里运行了。后来[SuperSodaSead](https://github.com/SuperSodaSea/Omniscent)大佬以 WebGL + Typescript 重新实现。本项目在此基础上进行了 Win32 移植，使用纯 C 语言编写，以 MSVC 编译、Crinkler 链接。
-
-可在Release页面下载编译后的程序。
 
 ## 两个版本
 
 | 版本 | 源文件 | 渲染方式 | 可执行文件大小 |
 |------|--------|----------|----------------|
-| **纯软光栅版** | `omniscent_all.c` | CPU 扫描线光栅化 | ~5171 字节（Crinkler 压缩） |
-| **双渲染版** | `src/` 下多个文件 | 软渲染 + OpenGL 硬渲染（F1 切换） | ~7260 字节（Crinkler 压缩） |
+| **纯软光栅版** | `omniscent_all.c` | CPU 扫描线光栅化 | 5149 字节（Crinkler 压缩） |
+| **双渲染版** | `src/` 下多个文件 | 软渲染 + OpenGL 硬渲染（F1 切换） | 7257 字节（Crinkler 压缩） |
 
-纯软光栅版将所有代码合并为单个文件，Crinkler压缩后为 5171 字节（俺已经尽力了，由于 Windows PE 格式的额外开销以及使用 C 语言而非汇编，压缩至4KB以内有点难度，期待大神出手）
+纯软光栅版将所有代码合并为单个文件，Crinkler压缩后为 5149 字节（俺已经尽力了，由于 Windows PE 格式的额外开销以及使用 C 语言而非汇编，压缩至4KB以内有点难度，期待大神出手）
 
 ## 特性
 

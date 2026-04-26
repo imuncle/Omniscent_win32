@@ -22,9 +22,7 @@ void generate_text(void) {
     for (int i = 0; i < 0x7D00; i++) { 
         int x = i % 320;
         int y = (i - x) / 320 + 5;
-        COLORREF color = GetPixel(hdc, x, y);
-        if (color > 0)
-            g_bg[i*2] = g_bg[i*2+1] = color;
+        g_bg[i*2] = g_bg[i*2+1] = GetPixel(hdc, x, y);
     }
 }
 

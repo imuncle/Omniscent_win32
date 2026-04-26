@@ -20,12 +20,13 @@ set(CRINKLER_FLAGS_LIST
     # "/TINYHEADER"
     # "/TINYIMPORT"
     "/UNSAFEIMPORT"
-    "/COMPMODE:SLOW"
+    "/COMPMODE:VERYSLOW"
     "/ORDERTRIES:5000"
 )
 # 将列表转换为字符串
 string(REPLACE ";" " " CRINKLER_FLAGS_STR "${CRINKLER_FLAGS_LIST}")
 
+# 2. 同样处理库文件
 set(CRINKLER_LIBS_LIST
     "kernel32.lib"
     "user32.lib"
@@ -35,13 +36,12 @@ set(CRINKLER_LIBS_LIST
 )
 string(REPLACE ";" " " CRINKLER_LIBS_STR "${CRINKLER_LIBS_LIST}")
 
+# 3. 覆盖链接指令
+# 注意：对 CRINKLER_EXE 加引号，防止路径中有空格
+# <OBJECTS> 是 CMake 自动生成的对象文件列表，它在链接时会自动处理好分隔符
 set(CMAKE_C_LINK_EXECUTABLE "\"${CRINKLER_EXE}\" /OUT:<TARGET> ${CRINKLER_FLAGS_STR} <OBJECTS> ${CRINKLER_LIBS_STR}")
 
 add_executable(omniscent WIN32 omniscent_all.c)
-set_target_properties(omniscent PROPERTIES 
-    LINK_FLAGS "/NODEFAULTLIB"
-)
-
 
 add_executable(omniscent_gl WIN32
     src/main.c
@@ -57,7 +57,4 @@ add_executable(omniscent_gl WIN32
     src/renderer_gl.c
     src/renderer_common.c
     src/util.c
-)
-set_target_properties(omniscent_gl PROPERTIES 
-    LINK_FLAGS "/NODEFAULTLIB"
 )
