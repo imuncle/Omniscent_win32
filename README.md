@@ -2,6 +2,8 @@
 
 Omniscent原作是 1997 年 **SANCTION** 制作的 4095 字节 demoscene intro（4k intro），现在只能在Dosbox里运行了。后来[SuperSodaSead](https://github.com/SuperSodaSea/Omniscent)大佬以 WebGL + Typescript 重新实现。本项目在此基础上进行了 Win32 移植，使用纯 C 语言编写，以 MSVC 编译、Crinkler 链接。
 
+可在[Release](https://github.com/imuncle/Omniscent_win32/releases)页面下载编译后的程序。
+
 ## 两个版本
 
 | 版本 | 源文件 | 渲染方式 | 可执行文件大小 |
