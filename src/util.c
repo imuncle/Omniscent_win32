@@ -1,17 +1,33 @@
 #include "util.h"
 
 /* Compiler-generated runtime helpers */
-#if defined(_MSC_VER)
 #pragma function(memcpy, memmove, memset)
-int _fltused = 0;
-__declspec(naked) void _ftol2(void) {
-    __asm fistp dword ptr [esp-4]
-    __asm mov eax, [esp-4]
-    __asm ret
+__declspec(naked) void* memcpy(void* dst, const void* src, size_t count) {
+    __asm {
+        push edi
+        push esi
+        mov  edi, [esp + 12]    // dst
+        mov  esi, [esp + 16]    // src
+        mov  ecx, [esp + 20]    // count
+        rep  movsb              // 核心指令：按字节拷贝
+        mov  eax, [esp + 12]    // C标准要求返回目的地址
+        pop  esi
+        pop  edi
+        ret
+    }
 }
-#endif
+
 __declspec(naked) void* memset(void* dst, int val, size_t count) {
-    __asm { push edi } __asm { mov edi,[esp+8] } __asm { mov eax,[esp+12] } __asm { mov ecx,[esp+16] } __asm { rep stosb } __asm { mov eax,[esp+8] } __asm { pop edi } __asm { ret }
+    __asm {
+        push edi
+        mov  edi, [esp + 8]     // dst
+        mov  eax, [esp + 12]    // val
+        mov  ecx, [esp + 16]    // count
+        rep  stosb              // 核心指令：将 AL 的值填入 EDI
+        mov  eax, [esp + 8]     // 返回目的地址
+        pop  edi
+        ret
+    }
 }
 void ___chkstk_ms(void) { }
 void ___chkstk() { }

@@ -17,12 +17,14 @@ void generate_text(void) {
     SelectObject(hdc, hFont);
     SetBkMode(hdc, OPAQUE);
     SetTextColor(hdc, RGB(0x1C,0x1C,0x1C));
-    TextOutA(hdc, 48, 8, "OMNISCENT", 9);
-    TextOutA(hdc, 8, 96, "(C) 1997 SANCTION", 17);
-    for (int i = 0; i < 0x7D00; i++) { 
+    SetBkColor(hdc, RGB(0, 0, 0));
+    TextOutA(hdc, 48, 2, "OMNISCENT", 9);
+    TextOutA(hdc, 8, 91, "(C) 1997 SANCTION", 17);
+    for (int i = 0; i < 0x7D00; i++)
+    {
         int x = i % 320;
-        int y = (i - x) / 320 + 5;
-        g_bg[i*2] = g_bg[i*2+1] = GetPixel(hdc, x, y);
+        int y = (i - x) / 320;
+        g_bg[i * 2] = g_bg[i * 2 + 1] = GetPixel(hdc, x, y);
     }
 }
 
