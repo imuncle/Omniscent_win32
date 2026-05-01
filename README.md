@@ -70,16 +70,9 @@ nmake
 
 ## 技术说明
 
-### 渲染管线
-
-Demo 在 320×200 的 256 色调色板索引帧缓冲中渲染，然后通过 DIB Section 转换为 24 位 RGB 并拉伸到窗口大小：
-
-1. **背景层** — 过程化绘制星星，然后用 GDI 位图字体在顶部和底部边距中渲染标题 "OMNISCENT" 和版权 "(C) 1997 SANCTION"
-2. **3D 场景层** — 在中间视口（扫描线 21–179）中渲染带过程纹理的 3D 模型，通过两遍渲染叠加在背景之上（类似 Three.js 的 `autoClear: false`）
-
 ### 3D 模型生成
 
-模型数据存储在 `MODEL_TABLE` 压缩字节流中，采用类似"海龟建模"的挤出式解析器：维护 15 个浮点/整型顶点，逐命令字节挤出新的面，支持旋转和光照。最终生成约 362 个顶点和 367 个四边形。
+模型数据存储在 `MODEL_TABLE` 压缩字节流中，最终生成约 362 个顶点和 367 个四边形。
 
 ### 软渲染器（扫描线光栅化）
 
@@ -111,24 +104,13 @@ Demo 在 320×200 的 256 色调色板索引帧缓冲中渲染，然后通过 DI
 - **内联汇编** — 手写 `memset` 和 `_ftol2`，避免 CRT 依赖
 - **`/NODEFAULTLIB`** — 不链接标准 C 运行时，入口点直接设为 `main`
 
-### OpenGL 投影矩阵
-
-GL 渲染使用自定义 4×4 投影矩阵，复现原版的伪透视 W 通道除法：
-
-```
-ndc_x = (x * 1.2 / z' - 160) / 160     其中 z' = (13 - depth) / 160
-ndc_y = (100 - y / z') / 100
-```
-
-通过 `glLoadMatrixf` 加载到 GL 投影矩阵，配合 GLSL 120 顶点着色器中的 `gl_ProjectionMatrix` 完成透视除法。
-
 ### 软渲染 vs OpenGL
 
 两种渲染器的视觉输出完全一致——软渲染是参考实现，GL 渲染器是在其基础上的 GPU 加速移植，窗口模式下画面更加高清流畅。
 
 ## 致谢
 
-- **omniscent**（原版）: <https://files.scene.org/view/demos/groups/sanction/snc_omni.zip>
+- **Omniscent**（原版）: <https://files.scene.org/view/demos/groups/sanction/snc_omni.zip>
 - **Omniscent**（SuperSodaSea 的 Typescript + WebGL 移植，本项目主要参考）: <https://github.com/SuperSodaSea/Omniscent>
 - **Crinkler** : <https://github.com/runestubbe/Crinkler>
 - **qwen3.6-plus**
